@@ -34,7 +34,7 @@ This file gives Claude Code (and any AI assistant) the context it needs to work 
 1. Vehicle arrives at the parking station.
 2. Operator records the number plate and vehicle type → a new Parking Session is created with `entryTime = now`, scoped to the operator's station. Slot occupancy for that vehicle type increments.
 3. The vehicle is parked. The session stays active/open.
-4. Vehicle leaves. Operator searches/selects the plate from the active list.
+4. Vehicle leaves. Operator finds the plate on the dedicated Checkout page (search or camera scan).
 5. System calculates `durationMinutes = exitTime - entryTime`.
 6. System applies the station's rate plan (snapshotted at entry) for that vehicle type to the duration → produces the charge, honoring grace period and daily cap.
 7. Operator records payment method (cash or UPI/online). Charge is shown/collected, session is marked closed, slot occupancy decrements, and a receipt/record is stored.
@@ -51,7 +51,8 @@ Built as one comprehensive release (no separate MVP/Phase-2 split):
 - **Vehicle-type-based rate plans** (car / bike / auto / truck / bus, each independently configurable). One active rate plan per vehicle type per station — enforced by a unique index, edit in place rather than creating duplicates.
 - **Slot/capacity tracking** per vehicle type per station (occupancy shown live).
 - **Online/UPI payment** recording alongside cash. The checkout UPI tab generates a scannable UPI QR code (standard `upi://pay` deep link) using the station's configured UPI ID (set in Settings) and the exact charge amount, so the customer's UPI app pre-fills the payee and amount — the operator still taps Confirm after the customer pays. Razorpay order creation also exists as a separate scaffold (webhook stubbed) for stations that want gateway-based online payment instead of a static VPA QR.
-- List of active (currently parked) vehicles with live duration.
+- Active Vehicles page: a read-only, live view of everything currently parked (no checkout action here).
+- Dedicated Checkout page: search-by-plate or camera-scan to find a parked vehicle and settle its charge — this is the only place a session gets closed.
 - Session history with search/filter (date range, plate, vehicle type) and pagination.
 - Dashboard with live occupancy and today's revenue/check-ins stats.
 - Dedicated Revenue page: today/this-month/all-time totals, daily (31-day) and monthly (12-month) revenue charts, and breakdowns by vehicle type and payment method — all aggregated server-side (`GET /api/revenue/summary`), grouped by IST calendar day/month.

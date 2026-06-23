@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Grid3x3 } from 'lucide-react';
 import { api } from '../api/client';
 import Card from '../components/Card';
+import PageHeader from '../components/PageHeader';
 
 const ALL_VEHICLE_TYPES = ['car', 'bike', 'auto', 'truck', 'bus'];
 
@@ -55,30 +56,30 @@ export default function Slots() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="page-title mb-6 font-semibold text-slate-900">Slot Capacity</h1>
+      <PageHeader icon={Grid3x3} title="Slot Capacity" subtitle="Set total capacity per vehicle type." />
       <Card title="Total slots per vehicle type">
         {vehicleTypes.length === 0 ? (
-          <p className="mb-4 text-sm text-slate-500">No vehicle types configured yet. Add one below to get started.</p>
+          <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">No vehicle types configured yet. Add one below to get started.</p>
         ) : (
           <div className="space-y-4">
             {vehicleTypes.map((vt) => (
               <div key={vt.type} className="flex flex-wrap items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <div className="font-medium capitalize text-slate-900">{vt.type}</div>
-                  <div className="text-xs text-slate-500">{occupiedFor(vt.type)} currently occupied</div>
+                  <div className="font-medium capitalize text-slate-900 dark:text-slate-100">{vt.type}</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">{occupiedFor(vt.type)} currently occupied</div>
                 </div>
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
                     min="0"
-                    className="min-h-11 w-24 shrink-0 rounded-md border border-slate-300 px-3 text-base sm:w-28 md:text-sm"
+                    className="min-h-11 w-24 shrink-0 rounded-md border border-slate-300 px-3 text-base sm:w-28 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
                     value={vt.totalSlots}
                     onChange={(e) => updateSlots(vt.type, e.target.value)}
                   />
                   <button
                     onClick={() => removeVehicleType(vt.type)}
                     aria-label={`Remove ${vt.type}`}
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-slate-500 hover:bg-red-50 hover:text-red-600"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-slate-500 hover:bg-red-50 hover:text-red-600 dark:text-slate-400 dark:hover:bg-red-950/40"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -89,9 +90,9 @@ export default function Slots() {
         )}
 
         {addableTypes.length > 0 && (
-          <div className="mt-6 flex flex-col gap-2 border-t border-slate-200 pt-4 xs:flex-row">
+          <div className="mt-6 flex flex-col gap-2 border-t border-slate-200 pt-4 xs:flex-row dark:border-slate-800">
             <select
-              className="min-h-11 flex-1 rounded-md border border-slate-300 px-3 text-base capitalize md:text-sm"
+              className="min-h-11 flex-1 rounded-md border border-slate-300 px-3 text-base capitalize dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
               value={typeToAdd}
               onChange={(e) => setTypeToAdd(e.target.value)}
             >
@@ -118,7 +119,7 @@ export default function Slots() {
         >
           Save Slot Capacity
         </button>
-        {saved && <p className="mt-2 text-center text-sm text-green-600">Saved.</p>}
+        {saved && <p className="mt-2 text-center text-sm text-green-600 dark:text-green-400">Saved.</p>}
       </Card>
     </div>
   );

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Pencil, Trash2, X } from 'lucide-react';
+import { Pencil, Trash2, X, Wallet } from 'lucide-react';
 import { api } from '../api/client';
 import Card from '../components/Card';
+import PageHeader from '../components/PageHeader';
 import { formatMoney } from '../utils/format';
 
 const VEHICLE_TYPES = ['car', 'bike', 'auto', 'truck', 'bus'];
@@ -92,16 +93,16 @@ export default function RatePlans() {
 
   return (
     <div>
-      <h1 className="page-title mb-6 font-semibold text-slate-900">Rate Plans</h1>
+      <PageHeader icon={Wallet} title="Rate Plans" subtitle="Configure pricing per vehicle type." />
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <Card title={editingId ? 'Edit Rate Plan' : 'New Rate Plan'} className="xl:col-span-1">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label className="mb-1 block text-sm font-medium text-slate-700">Vehicle Type</label>
+              <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Vehicle Type</label>
               <select
                 disabled={!!editingId}
-                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base capitalize disabled:bg-slate-100 disabled:text-slate-500 md:text-sm"
+                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base capitalize disabled:bg-slate-100 disabled:text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:disabled:bg-slate-900 md:text-sm"
                 value={form.vehicleType}
                 onChange={(e) => {
                   setForm({ ...form, vehicleType: e.target.value });
@@ -115,55 +116,55 @@ export default function RatePlans() {
                 ))}
               </select>
               {!editingId && availableTypes.length === 0 && (
-                <p className="mt-1 text-xs text-slate-500">Every vehicle type already has a rate plan.</p>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Every vehicle type already has a rate plan.</p>
               )}
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-slate-700">First Hour Rate (₹)</label>
+              <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">First Hour Rate (₹)</label>
               <input
                 type="number"
                 required
                 min="0"
                 step="0.01"
-                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base md:text-sm"
+                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
                 value={form.firstHourRate}
                 onChange={(e) => setForm({ ...form, firstHourRate: e.target.value })}
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-slate-700">Additional Hour Rate (₹)</label>
+              <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Additional Hour Rate (₹)</label>
               <input
                 type="number"
                 required
                 min="0"
                 step="0.01"
-                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base md:text-sm"
+                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
                 value={form.additionalHourRate}
                 onChange={(e) => setForm({ ...form, additionalHourRate: e.target.value })}
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-slate-700">Grace Period (minutes)</label>
+              <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Grace Period (minutes)</label>
               <input
                 type="number"
                 min="0"
-                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base md:text-sm"
+                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
                 value={form.gracePeriodMinutes}
                 onChange={(e) => setForm({ ...form, gracePeriodMinutes: e.target.value })}
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-slate-700">Daily Cap (₹, optional)</label>
+              <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Daily Cap (₹, optional)</label>
               <input
                 type="number"
                 min="0"
                 step="0.01"
-                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base md:text-sm"
+                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
                 value={form.dailyCap}
                 onChange={(e) => setForm({ ...form, dailyCap: e.target.value })}
               />
             </div>
-            {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
             <div className="flex flex-col gap-2 xs:flex-row">
               <button
                 type="submit"
@@ -176,7 +177,7 @@ export default function RatePlans() {
                 <button
                   type="button"
                   onClick={cancelEdit}
-                  className="min-h-11 rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-600 hover:bg-slate-50"
+                  className="min-h-11 rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                 >
                   Cancel
                 </button>
@@ -187,7 +188,7 @@ export default function RatePlans() {
 
         <Card title="Existing Rate Plans" className="xl:col-span-2">
           {plans.length === 0 ? (
-            <p className="text-sm text-slate-500">No rate plans configured yet.</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">No rate plans configured yet.</p>
           ) : (
             <div className="space-y-3">
               {plans.map((p) => (

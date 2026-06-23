@@ -3,6 +3,7 @@ import { IndianRupee, CalendarDays, CalendarRange, Receipt } from 'lucide-react'
 import { api } from '../api/client';
 import Card from '../components/Card';
 import StatCard from '../components/StatCard';
+import PageHeader from '../components/PageHeader';
 import { formatMoney } from '../utils/format';
 
 function dayLabel(dateKey) {
@@ -16,7 +17,7 @@ function monthLabel(monthKey) {
 
 function BarChart({ data, labelFor, emptyMessage }) {
   if (data.length === 0) {
-    return <p className="text-sm text-slate-500">{emptyMessage}</p>;
+    return <p className="text-sm text-slate-500 dark:text-slate-400">{emptyMessage}</p>;
   }
 
   const max = Math.max(1, ...data.map((d) => d.revenue));
@@ -30,11 +31,11 @@ function BarChart({ data, labelFor, emptyMessage }) {
             <div key={d.key} className="flex h-full w-8 flex-col items-center justify-end gap-1 sm:w-full" title={`${formatMoney(d.revenue)} · ${d.count} session(s)`}>
               <div className="flex h-full w-full items-end">
                 <div
-                  className={`w-full rounded-t-sm ${d.revenue > 0 ? 'bg-blue-600' : 'bg-slate-200'}`}
+                  className={`w-full rounded-t-sm ${d.revenue > 0 ? 'bg-blue-600' : 'bg-slate-200 dark:bg-slate-700'}`}
                   style={{ height: `${pct}%` }}
                 />
               </div>
-              <div className="text-[10px] text-slate-500">{labelFor(d.key)}</div>
+              <div className="text-[10px] text-slate-500 dark:text-slate-400">{labelFor(d.key)}</div>
             </div>
           );
         })}
@@ -53,8 +54,8 @@ export default function Revenue() {
   if (!summary) {
     return (
       <div>
-        <h1 className="page-title mb-6 font-semibold text-slate-900">Revenue</h1>
-        <p className="text-sm text-slate-500">Loading...</p>
+        <PageHeader icon={IndianRupee} title="Revenue" />
+        <p className="text-sm text-slate-500 dark:text-slate-400">Loading...</p>
       </div>
     );
   }
@@ -65,10 +66,7 @@ export default function Revenue() {
 
   return (
     <div>
-      <div className="mb-6 md:mb-8">
-        <h1 className="page-title font-semibold text-slate-900">Revenue</h1>
-        <p className="mt-1 text-sm text-slate-500">Earnings across every closed session at this station.</p>
-      </div>
+      <PageHeader icon={IndianRupee} title="Revenue" subtitle="Earnings across every closed session at this station." />
 
       <div className="mb-6 grid grid-cols-1 gap-4 xs:grid-cols-2 md:mb-8 md:grid-cols-4">
         <StatCard
@@ -108,13 +106,13 @@ export default function Revenue() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Card title="Revenue by Vehicle Type">
           {summary.byVehicleType.length === 0 ? (
-            <p className="text-sm text-slate-500">No closed sessions yet.</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">No closed sessions yet.</p>
           ) : (
             <div className="space-y-3">
               {summary.byVehicleType.map((v) => (
                 <div key={v.vehicleType} className="flex items-center justify-between text-sm">
-                  <span className="font-medium capitalize text-slate-700">{v.vehicleType}</span>
-                  <span className="text-slate-500">
+                  <span className="font-medium capitalize text-slate-700 dark:text-slate-300">{v.vehicleType}</span>
+                  <span className="text-slate-500 dark:text-slate-400">
                     {formatMoney(v.revenue)} · {v.count} session{v.count === 1 ? '' : 's'}
                   </span>
                 </div>
@@ -125,13 +123,13 @@ export default function Revenue() {
 
         <Card title="Revenue by Payment Method">
           {summary.byPaymentMethod.length === 0 ? (
-            <p className="text-sm text-slate-500">No closed sessions yet.</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">No closed sessions yet.</p>
           ) : (
             <div className="space-y-3">
               {summary.byPaymentMethod.map((p) => (
                 <div key={p.method || 'unknown'} className="flex items-center justify-between text-sm">
-                  <span className="font-medium uppercase text-slate-700">{p.method || '—'}</span>
-                  <span className="text-slate-500">
+                  <span className="font-medium uppercase text-slate-700 dark:text-slate-300">{p.method || '—'}</span>
+                  <span className="text-slate-500 dark:text-slate-400">
                     {formatMoney(p.revenue)} · {p.count} session{p.count === 1 ? '' : 's'}
                   </span>
                 </div>

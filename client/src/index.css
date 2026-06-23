@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Class-based dark mode: toggled manually via ThemeContext, not OS preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Custom breakpoint to fill the gap between the default Tailwind scale
    (sm=640, md=768, lg=1024, xl=1280) so we have a step at 480px too. */
 @theme {
@@ -11,6 +14,11 @@ body {
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   background-color: #f8fafc;
   -webkit-text-size-adjust: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.dark body {
+  background-color: #0f172a;
 }
 
 * {
@@ -23,5 +31,32 @@ body {
   .page-title {
     font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.875rem);
     line-height: 1.25;
+  }
+
+  /* Attention-pulse for the floating scan button — one full breathing
+     cycle every 2s, matched by an expanding/fading ring behind it. */
+  @keyframes scan-fab-breathe {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08);
+    }
+  }
+  @keyframes scan-fab-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    70%, 100% {
+      transform: scale(1.9);
+      opacity: 0;
+    }
+  }
+  .animate-scan-fab {
+    animation: scan-fab-breathe 2s ease-in-out infinite;
+  }
+  .animate-scan-fab-ring {
+    animation: scan-fab-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }

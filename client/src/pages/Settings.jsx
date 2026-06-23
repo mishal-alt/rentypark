@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Pencil, X } from 'lucide-react';
+import { Pencil, X, Settings as SettingsIcon } from 'lucide-react';
 import { api } from '../api/client';
 import Card from '../components/Card';
+import PageHeader from '../components/PageHeader';
 import { useAuth } from '../context/AuthContext';
 
 export default function Settings() {
@@ -68,17 +69,17 @@ export default function Settings() {
 
   return (
     <div>
-      <h1 className="page-title mb-6 font-semibold text-slate-900">Settings</h1>
+      <PageHeader icon={SettingsIcon} title="Settings" subtitle="Manage your station profile and team." />
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Card>
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-base font-semibold text-slate-900">Station Profile</h2>
+            <h2 className="text-base font-semibold text-slate-900 dark:text-slate-100">Station Profile</h2>
             {station && user.role === 'admin' && (
               <button
                 onClick={() => (editingProfile ? setEditingProfile(false) : startEditProfile())}
                 aria-label={editingProfile ? 'Cancel editing' : 'Edit station profile'}
-                className="flex h-9 w-9 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+                className="flex h-9 w-9 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
               >
                 {editingProfile ? <X className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
               </button>
@@ -86,7 +87,7 @@ export default function Settings() {
           </div>
 
           {!station ? (
-            <p className="text-sm text-slate-500">Loading...</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">Loading...</p>
           ) : editingProfile ? (
             <form onSubmit={handleSaveProfile} className="space-y-3">
               <Field label="Name" value={profileForm.name} onChange={(v) => setProfileForm({ ...profileForm, name: v })} required />
@@ -102,10 +103,10 @@ export default function Settings() {
                 onChange={(v) => setProfileForm({ ...profileForm, upiId: v })}
                 placeholder="yourname@bank"
               />
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Used to generate the UPI QR code shown to customers at checkout, with the exact amount pre-filled.
               </p>
-              {profileError && <p className="text-sm text-red-600">{profileError}</p>}
+              {profileError && <p className="text-sm text-red-600 dark:text-red-400">{profileError}</p>}
               <button type="submit" className="min-h-11 w-full rounded-md bg-blue-600 px-3 text-sm font-semibold text-white hover:bg-blue-700">
                 Save Changes
               </button>
@@ -126,8 +127,8 @@ export default function Settings() {
             <ul className="mb-4 space-y-2 text-sm">
               {users.map((u) => (
                 <li key={u._id || u.id} className="flex items-center justify-between gap-3">
-                  <span className="truncate text-slate-700">{u.name}</span>
-                  <span className="shrink-0 capitalize text-slate-500">{u.role}</span>
+                  <span className="truncate text-slate-700 dark:text-slate-300">{u.name}</span>
+                  <span className="shrink-0 capitalize text-slate-500 dark:text-slate-400">{u.role}</span>
                 </li>
               ))}
             </ul>
@@ -135,7 +136,7 @@ export default function Settings() {
               <input
                 placeholder="Name"
                 required
-                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base md:text-sm"
+                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
@@ -143,7 +144,7 @@ export default function Settings() {
                 placeholder="Email"
                 type="email"
                 required
-                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base md:text-sm"
+                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
               />
@@ -151,12 +152,12 @@ export default function Settings() {
                 placeholder="Password"
                 type="password"
                 required
-                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base md:text-sm"
+                className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
               />
-              {error && <p className="text-sm text-red-600">{error}</p>}
-              {success && <p className="text-sm text-green-600">{success}</p>}
+              {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+              {success && <p className="text-sm text-green-600 dark:text-green-400">{success}</p>}
               <button type="submit" className="min-h-11 w-full rounded-md bg-blue-600 px-3 text-sm font-semibold text-white hover:bg-blue-700">
                 Add Operator
               </button>
@@ -171,8 +172,8 @@ export default function Settings() {
 function Row({ label, value, capitalize = true }) {
   return (
     <div className="flex justify-between gap-3">
-      <dt className="text-slate-500">{label}</dt>
-      <dd className={`truncate font-medium text-slate-900 ${capitalize ? 'capitalize' : ''}`}>{value}</dd>
+      <dt className="text-slate-500 dark:text-slate-400">{label}</dt>
+      <dd className={`truncate font-medium text-slate-900 dark:text-slate-100 ${capitalize ? 'capitalize' : ''}`}>{value}</dd>
     </div>
   );
 }
@@ -180,11 +181,11 @@ function Row({ label, value, capitalize = true }) {
 function Field({ label, value, onChange, required = false, placeholder = '' }) {
   return (
     <div>
-      <label className="mb-1 block text-sm font-medium text-slate-700">{label}</label>
+      <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">{label}</label>
       <input
         required={required}
         placeholder={placeholder}
-        className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base md:text-sm"
+        className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />

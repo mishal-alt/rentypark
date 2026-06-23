@@ -92,16 +92,16 @@ export default function PlateScannerModal({ title = 'Scan Number Plate', onCaptu
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-      <div className="w-full max-w-sm rounded-xl bg-white p-5 shadow-lg xs:p-6">
+      <div className="w-full max-w-sm rounded-xl bg-white p-5 shadow-lg xs:p-6 dark:bg-slate-900">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{title}</h2>
           <button
             onClick={() => {
               stopCamera();
               onClose();
             }}
             aria-label="Close scanner"
-            className="flex h-9 w-9 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100"
+            className="flex h-9 w-9 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
           >
             <X className="h-5 w-5" />
           </button>
@@ -139,19 +139,19 @@ export default function PlateScannerModal({ title = 'Scan Number Plate', onCaptu
 
         {status === STATUS.REVIEW && (
           <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Detected plate (edit if needed)</label>
+            <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Detected plate (edit if needed)</label>
             <input
               autoFocus
-              className="mb-3 min-h-11 w-full rounded-md border border-slate-300 px-3 text-base uppercase tracking-wide focus:border-blue-500 focus:outline-none"
+              className="mb-3 min-h-11 w-full rounded-md border border-slate-300 px-3 text-base uppercase tracking-wide focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
               value={recognizedText}
               onChange={(e) => setRecognizedText(e.target.value)}
               placeholder="Type the plate if it wasn't read correctly"
             />
-            {error && <p className="mb-3 text-sm text-red-600">{error}</p>}
+            {error && <p className="mb-3 text-sm text-red-600 dark:text-red-400">{error}</p>}
             <div className="flex gap-2">
               <button
                 onClick={handleRetake}
-                className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 <RotateCcw className="h-4 w-4" />
                 Retake
@@ -171,7 +171,7 @@ export default function PlateScannerModal({ title = 'Scan Number Plate', onCaptu
         {status === STATUS.ERROR && (
           <button
             onClick={startCamera}
-            className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
           >
             Try Again
           </button>

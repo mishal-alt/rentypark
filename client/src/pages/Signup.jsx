@@ -35,10 +35,10 @@ export default function Signup() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
-      <div className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-sm xs:p-8">
-        <h1 className="page-title mb-1 font-semibold text-slate-900">Create your station</h1>
-        <p className="mb-6 text-sm text-slate-500">Set up RentyPark for your parking station</p>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4 dark:bg-slate-950">
+      <div className="w-full max-w-md rounded-xl border border-slate-200 bg-white p-6 shadow-sm xs:p-8 dark:border-slate-800 dark:bg-slate-900">
+        <h1 className="page-title mb-1 font-semibold text-slate-900 dark:text-slate-100">Create your station</h1>
+        <p className="mb-6 text-sm text-slate-500 dark:text-slate-400">Set up RentyPark for your parking station</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <Field label="Station name" value={form.stationName} onChange={update('stationName')} required />
@@ -48,7 +48,7 @@ export default function Signup() {
           <Field label="Email" type="email" value={form.email} onChange={update('email')} required />
           <Field label="Password" type="password" value={form.password} onChange={update('password')} required />
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
           <button
             type="submit"
             disabled={loading}
@@ -58,9 +58,9 @@ export default function Signup() {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-slate-500">
+        <p className="mt-4 text-center text-sm text-slate-500 dark:text-slate-400">
           Already have an account?{' '}
-          <Link to="/login" className="font-medium text-blue-600 hover:underline">
+          <Link to="/login" className="font-medium text-blue-600 hover:underline dark:text-blue-400">
             Sign in
           </Link>
         </p>
@@ -72,11 +72,11 @@ export default function Signup() {
 function Field({ label, value, onChange, type = 'text', required = false }) {
   return (
     <div>
-      <label className="mb-1 block text-sm font-medium text-slate-700">{label}</label>
+      <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">{label}</label>
       <input
         type={type}
         required={required}
-        className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base focus:border-blue-500 focus:outline-none md:text-sm"
+        className="min-h-11 w-full rounded-md border border-slate-300 px-3 text-base focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 md:text-sm"
         value={value}
         onChange={onChange}
       />

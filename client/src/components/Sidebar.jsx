@@ -3,21 +3,26 @@ import {
   LayoutDashboard,
   LogIn,
   Car,
+  LogOut,
   History as HistoryIcon,
   IndianRupee,
   Wallet,
   Grid3x3,
   Settings as SettingsIcon,
-  LogOut,
+  Power,
   ParkingSquare,
+  Sun,
+  Moon,
   X,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 const links = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/check-in', label: 'Check-In', icon: LogIn },
   { to: '/active', label: 'Active Vehicles', icon: Car },
+  { to: '/checkout', label: 'Checkout', icon: LogOut },
   { to: '/history', label: 'History', icon: HistoryIcon },
   { to: '/revenue', label: 'Revenue', icon: IndianRupee },
   { to: '/rate-plans', label: 'Rate Plans', icon: Wallet },
@@ -27,6 +32,7 @@ const links = [
 
 export default function Sidebar({ open, onClose }) {
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const initial = user?.name?.charAt(0)?.toUpperCase() || '?';
 
   return (
@@ -52,13 +58,22 @@ export default function Sidebar({ open, onClose }) {
             </div>
             <span className="text-lg font-semibold tracking-tight text-white">RentyPark</span>
           </div>
-          <button
-            onClick={onClose}
-            aria-label="Close menu"
-            className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden"
-          >
-            <X className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"
+            >
+              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+            <button
+              onClick={onClose}
+              aria-label="Close menu"
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
         </div>
 
         <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3">
@@ -99,7 +114,7 @@ export default function Sidebar({ open, onClose }) {
             onClick={logout}
             className="flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-slate-800 px-3 py-2.5 text-sm font-medium text-slate-200 transition-colors hover:bg-slate-700"
           >
-            <LogOut className="h-4 w-4" strokeWidth={2} />
+            <Power className="h-4 w-4" strokeWidth={2} />
             Log out
           </button>
         </div>
