@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+/* Custom breakpoint to fill the gap between the default Tailwind scale
+   (sm=640, md=768, lg=1024, xl=1280) so we have a step at 480px too. */
+@theme {
+  --breakpoint-xs: 30rem;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f8fafc;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@layer base {
+  /* Fluid page-title sizing: 20px at narrow phones up to 30px on desktop,
+     scaling smoothly in between instead of jumping at a single breakpoint. */
+  .page-title {
+    font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.875rem);
+    line-height: 1.25;
+  }
+}
