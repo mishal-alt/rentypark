@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+const rawBaseURL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
+const baseURL = rawBaseURL.replace(/\/+$/, '').endsWith('/api')
+  ? rawBaseURL.replace(/\/+$/, '')
+  : `${rawBaseURL.replace(/\/+$/, '')}/api`;
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000/api',
+  baseURL,
 });
 
 api.interceptors.request.use((config) => {
